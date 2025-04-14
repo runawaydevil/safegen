@@ -207,7 +207,7 @@ require_once 'gerador_chaves.php';
         <button class="btn-gerar" onclick="window.location.reload()">Gerar Novas Chaves</button>
 
         <footer>
-            Desenvolvido por <a href="https://github.com/runawwaydevil" target="_blank" rel="noopener noreferrer">runawwaydevil</a>
+            Desenvolvido por <a href="https://github.com/runawaydevil" target="_blank" rel="noopener noreferrer">runawaydevil</a>
         </footer>
     </div>
 

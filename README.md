@@ -2,7 +2,7 @@
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![PHP Version](https://img.shields.io/badge/PHP-8.0+-blue.svg)](https://php.net/)
-[![GitHub Stars](https://img.shields.io/github/stars/runawwaydevil/safegen?style=social)](https://github.com/runawwaydevil/safegen/stargazers)
+[![GitHub Stars](https://img.shields.io/github/stars/runawaydevil/safegen?style=social)](https://github.com/runawaydevil/safegen/stargazers)
 
 Um gerador de chaves seguras desenvolvido em PHP que permite gerar diferentes tipos de chaves criptográficas.
 
@@ -44,7 +44,7 @@ Este projeto está licenciado sob a licença MIT - veja o arquivo [LICENSE](LICE
 
 ## Autor
 
-Desenvolvido por [runawwaydevil](https://github.com/runawwaydevil)
+Desenvolvido por [runawaydevil](https://github.com/runawaydevil)
 
 ## Contribuição
 
