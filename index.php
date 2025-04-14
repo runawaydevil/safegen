@@ -174,37 +174,74 @@ require_once 'gerador_chaves.php';
         footer a:hover {
             color: #fff;
         }
+
+        .seletor-container {
+            margin-bottom: 20px;
+        }
+
+        .seletor-chave {
+            width: 100%;
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            background: rgba(255, 255, 255, 0.1);
+            color: #fff;
+            font-size: 1rem;
+            margin-top: 5px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .seletor-chave:hover {
+            background: rgba(255, 255, 255, 0.15);
+        }
+
+        .seletor-chave:focus {
+            outline: none;
+            border-color: #4cc9f0;
+        }
+
+        .seletor-chave option {
+            background: #1a1a2e;
+            color: #fff;
+        }
+
+        @media (max-width: 480px) {
+            .seletor-chave {
+                font-size: 0.9rem;
+                padding: 8px;
+            }
+        }
     </style>
 </head>
 <body>
     <div class="container">
         <h1>Gerador de Chaves Seguras</h1>
         
-        <div class="chave-container">
-            <div class="chave-label">Chave 64</div>
-            <div class="chave-valor" id="chave64"><?php echo gerarChave64(); ?></div>
-            <button class="btn-copiar" onclick="copiarChave('chave64')">Copiar</button>
+        <div class="seletor-container">
+            <label for="tipo-chave" class="chave-label">Selecione o tipo de chave:</label>
+            <select id="tipo-chave" class="seletor-chave" onchange="gerarChaveSelecionada()">
+                <option value="chave64">Chave 64</option>
+                <option value="chaveBase64">Chave Base64</option>
+                <option value="uuid">UUID</option>
+                <option value="chaveEspeciais">Chave com Especiais</option>
+                <option value="chaveBase58">Chave Base58</option>
+                <option value="chaveBase32">Chave Base32</option>
+                <option value="hashBcrypt">Hash Bcrypt</option>
+                <option value="hashArgon2">Hash Argon2</option>
+                <option value="chaveEmoji">Chave com Emojis</option>
+                <option value="chaveMnemonica">Chave Mnemônica</option>
+                <option value="chaveASCII">Chave ASCII Imprimível</option>
+            </select>
         </div>
 
         <div class="chave-container">
-            <div class="chave-label">Chave Base64</div>
-            <div class="chave-valor" id="chaveBase64"><?php echo gerarChaveBase64(); ?></div>
-            <button class="btn-copiar" onclick="copiarChave('chaveBase64')">Copiar</button>
+            <div class="chave-label" id="label-chave">Chave 64</div>
+            <div class="chave-valor" id="chave-gerada"></div>
+            <button class="btn-copiar" onclick="copiarChave('chave-gerada')">Copiar</button>
         </div>
 
-        <div class="chave-container">
-            <div class="chave-label">UUID</div>
-            <div class="chave-valor" id="uuid"><?php echo gerarUUID(); ?></div>
-            <button class="btn-copiar" onclick="copiarChave('uuid')">Copiar</button>
-        </div>
-
-        <div class="chave-container">
-            <div class="chave-label">Chave com Especiais</div>
-            <div class="chave-valor" id="chaveEspeciais"><?php echo gerarChaveComEspeciais(); ?></div>
-            <button class="btn-copiar" onclick="copiarChave('chaveEspeciais')">Copiar</button>
-        </div>
-
-        <button class="btn-gerar" onclick="window.location.reload()">Gerar Novas Chaves</button>
+        <button class="btn-gerar" onclick="gerarChaveSelecionada()">Gerar Nova Chave</button>
 
         <footer>
             Desenvolvido por <a href="https://github.com/runawaydevil" target="_blank" rel="noopener noreferrer">runawaydevil</a>
@@ -212,6 +249,26 @@ require_once 'gerador_chaves.php';
     </div>
 
     <script>
+        function gerarChaveSelecionada() {
+            const tipoChave = document.getElementById('tipo-chave').value;
+            const labelChave = document.getElementById('label-chave');
+            const chaveGerada = document.getElementById('chave-gerada');
+            
+            // Atualiza o label
+            labelChave.textContent = document.getElementById('tipo-chave').options[document.getElementById('tipo-chave').selectedIndex].text;
+            
+            // Gera a chave selecionada
+            fetch('gerar_chave.php?tipo=' + tipoChave)
+                .then(response => response.text())
+                .then(chave => {
+                    chaveGerada.textContent = chave;
+                })
+                .catch(error => {
+                    console.error('Erro ao gerar chave:', error);
+                    chaveGerada.textContent = 'Erro ao gerar chave. Por favor, tente novamente.';
+                });
+        }
+
         function copiarChave(id) {
             const chave = document.getElementById(id).textContent;
             const botao = event.target;
@@ -229,6 +286,9 @@ require_once 'gerador_chaves.php';
                 alert('Erro ao copiar chave. Por favor, tente novamente.');
             });
         }
+
+        // Gera a primeira chave ao carregar a página
+        window.onload = gerarChaveSelecionada;
     </script>
 </body>
 </html> 
